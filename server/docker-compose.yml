@@ -1,0 +1,19 @@
+
+version: '3.8'
+services:
+  app:
+    build:
+      context: ./restapi
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+
+  sql_server:
+    build:
+      context: ./db_setup
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_PASSWORD: "mysecretpassword"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "5432:5432"
