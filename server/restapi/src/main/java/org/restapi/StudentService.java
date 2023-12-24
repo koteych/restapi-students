@@ -14,8 +14,8 @@ import java.sql.Date;
 import org.restapi.Student;
 
 public class StudentService {
-    //private static final String DB_URL = "jdbc:postgresql://sql_server:5432/improvised_university";
-    private static final String DB_URL = "jdbc:postgresql://localhost:5432/improvised_university";
+    private static final String DB_URL = "jdbc:postgresql://sql_server:5432/improvised_university";
+    //private static final String DB_URL = "jdbc:postgresql://localhost:5432/improvised_university";
     private static final String USER = "postgres";
     private static final String PASSWORD = "mysecretpassword";
 
