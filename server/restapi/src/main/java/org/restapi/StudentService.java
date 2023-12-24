@@ -14,16 +14,20 @@ import java.sql.Date;
 import org.restapi.Student;
 
 public class StudentService {
-    private static final String DB_URL = "jdbc:postgresql://sql_server:5432/improvised_university";
+    private String DB_URL = "jdbc:postgresql://sql_server:5432/improvised_university";
     //private static final String DB_URL = "jdbc:postgresql://localhost:5432/improvised_university";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "mysecretpassword";
+    private String USER = "postgres";
+    private String PASSWORD = "mysecretpassword";
 
 
     private List<Student> students;
 
     public StudentService() {
         this.students = new ArrayList<>();
+
+        this.DB_URL = System.getenv("SQL_SERVER_URL");
+        this.USER = System.getenv("SQL_SERVER_USERNAME");
+        this.PASSWORD = System.getenv("SQL_SERVER_PASSWORD");
     }
 
     public List<Student> getAllStudents() {
