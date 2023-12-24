@@ -14,7 +14,8 @@ import java.sql.Date;
 import org.restapi.Student;
 
 public class StudentService {
-    private static final String DB_URL = "jdbc:postgresql://sql_server:5432/improvised_university";
+    //private static final String DB_URL = "jdbc:postgresql://sql_server:5432/improvised_university";
+    private static final String DB_URL = "jdbc:postgresql://localhost:5432/improvised_university";
     private static final String USER = "postgres";
     private static final String PASSWORD = "mysecretpassword";
 
@@ -45,8 +46,6 @@ public class StudentService {
                     Student student = new Student(id, firstName, lastName, middleName, group, "");
 
                     students.add(student);
-
-                    System.out.println("ID: " + id + ", Name: " + firstName + " " + lastName + " " + middleName + ", Date of Birth: " + dateOfBirth + ", Group: " + group);
                 }
             }
 
@@ -57,12 +56,14 @@ public class StudentService {
         return students;
     }
 
-    public void addStudent(String name) {
+    public void addStudent(String firstName, String lastName, String middleName, String birthdate, String group) {
+        /* 
         String firstName = "John";
         String lastName = "Doe";
         String middleName = "Smith";
-        Date dateOfBirth = Date.valueOf("2000-01-15");
         String group = "A";
+        */
+        Date dateOfBirth = Date.valueOf(birthdate);
 
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
             String query = "INSERT INTO students (first_name, last_name, middle_name, date_of_birth, group_name) VALUES (?, ?, ?, ?, ?)";

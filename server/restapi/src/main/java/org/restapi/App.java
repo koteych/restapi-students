@@ -12,19 +12,9 @@ import java.util.ArrayList;
 
 import org.restapi.StudentService;
 import org.restapi.Student;
+import org.restapi.IncomingRequestsHandler;
 
 import com.google.gson.Gson;
-
-class HelloHandler implements HttpHandler {
-    @Override
-    public void handle(HttpExchange exchange) throws IOException {
-        String response = "Hello, this is a simple REST service!";
-        exchange.sendResponseHeaders(200, response.length());
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
-    }
-}
 
 class JsonHandler implements HttpHandler {
     @Override
@@ -48,31 +38,12 @@ class JsonHandler implements HttpHandler {
 public class App 
 {
     public static void main(String[] args) throws IOException {
-
-        List<Student> retrievedStudents = new ArrayList<>();
-
-        StudentService studentService = new StudentService();
-
-        retrievedStudents = studentService.getAllStudents();
-
-        for (Student student : retrievedStudents) {
-            System.out.println(student.getName());
-        }
-
-        studentService.deleteStudent(2);
-        studentService.addStudent("hello");
-
-        DatabaseConnector dc = new DatabaseConnector();
-
-        System.out.println("Hello, let's rebuld");
-
         int port = 8000;
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-        server.createContext("/hello", new HelloHandler());
         server.createContext("/api/students", new JsonHandler());
-        server.setExecutor(null); // creates a default executor
+        server.createContext("/api/v2/students", new IncomingRequestsHandler());
+        server.setExecutor(null);
         server.start();
         System.out.println("Server is listening on port " + port);
-
     }
 }
